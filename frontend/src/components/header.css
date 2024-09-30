@@ -1,0 +1,66 @@
+.header {
+    width: 100%;
+    background-color: #f9f9f9; /* Color de fondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px; /* Altura del header */
+    padding: 0 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px; /* Espaciado entre los botones de navegación */
+}
+
+.nav-button {
+    border: none;
+    background-color: transparent;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 600; /* semiBold */
+    cursor: pointer;
+    transition: color 0.3s;
+    color: #333; /* Color del texto */
+}
+
+.nav-button:hover {
+    color: #007bff; /* Color al pasar el mouse */
+}
+
+.logo-container {
+    height: 40px; /* Altura del logo */
+    flex-grow: 1; /* Permite que el logo se mantenga en el centro */
+    display: flex;
+    justify-content: center; /* Centra el logo */
+}
+
+.logo {
+    height: 100%; /* Ajusta la altura al contenedor */
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px; /* Espaciado entre los botones de autenticación */
+}
+
+.auth-button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff; /* Color del botón */
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 600; /* semiBold */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-button:hover {
+    background-color: #0056b3; /* Color al pasar el mouse */
+}

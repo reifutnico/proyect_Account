@@ -26,6 +26,7 @@ export default class AccountRepository {
 
     async registerUser(username, email, passwordHash) {
         try {
+            await this.deletePendingUser(email);
             const sql = 'INSERT INTO users (username, email, password_hash, role_id) VALUES ($1, $2, $3, $4) RETURNING *';
             const values = [username, email, passwordHash, 2]; 
             const result = await this.DBClient.query(sql, values);
@@ -38,10 +39,9 @@ export default class AccountRepository {
 
     async registerPendingUser(username, email, passwordHash) {
         try {
-            const sql = 'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *';
+            const sql = 'INSERT INTO pending_users (username, email, hashed_password) VALUES ($1, $2, $3) RETURNING *';
             const values = [username, email, passwordHash]; 
             const result = await this.DBClient.query(sql, values);
-            await this.deletePendingUser(email);
             return result.rows[0]; 
         } catch (error) {
             console.log("Error in registerUser:", error);
@@ -73,18 +73,6 @@ export default class AccountRepository {
         }
     }
 
-    
-    async confirmUser(email) {
-        try {
-            const sql = 'INSERT INTO users (username, email, password_hash, role_id) VALUES ($1, $2, $3, $4) RETURNING *';
-            const values = [username, email, passwordHash, 2]; 
-            const result = await this.DBClient.query(sql, values);
-            return result.rows[0]; 
-        } catch (error) {
-            console.log("Error in registerUser:", error);
-            throw error;
-        }
-    }
 
     async closeConnection() {
         await this.DBClient.end();

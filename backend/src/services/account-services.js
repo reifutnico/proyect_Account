@@ -28,14 +28,16 @@ export default class AccountServices {
 
       async registerPendingUser(username, email, passwordHash)
       {
+        console.log("entre registerPendingUser");
+        
       await AccountRepositories.registerPendingUser(username, email, passwordHash);
       return "inserted registerPendingUser";
       }
 
       async getPendingUser(email)
       {
-      await AccountRepositories.getPendingUser(email);
-      return "inserted getPendingUser";
+      const response = await AccountRepositories.getPendingUser(email);
+      return response;
       }
 
 

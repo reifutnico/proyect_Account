@@ -1,0 +1,17 @@
+.footer {
+    text-align: center;
+    padding: 20px;
+    height: 100px; /* Altura del footer */
+    background-color: #f9f9f9; /* Color de fondo */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 600; /* semiBold */
+    margin: 0; /* Elimina el margen */
+}

@@ -1,0 +1,13 @@
+section {
+    padding: 50px 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+section h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+section p {
+    font-size: 1.2em;
+}

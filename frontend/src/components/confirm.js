@@ -1,50 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const ConfirmAccount = () => {
-    const { token } = useParams(); // Obtén el token de la URL
-    const [message, setMessage] = useState('');
-    const [loading, setLoading] = useState(true);
+const Confirm = () => {
+  const [confirmed, setConfirmed] = useState(false); // Estado para saber si la cuenta fue confirmada
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const confirmUser = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3150/api/confirm/${token}`);
-                setMessage(response.data.message);
-            } catch (error) {
-                setMessage(error.response.data.error || 'An error occurred while confirming your account.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        confirmUser();
-    }, [token]);
-
-    if (loading) {
-        return <p>Loading...</p>;
+  useEffect(() => {
+    // Verificar en localStorage si la cuenta ha sido confirmada
+    const isConfirmed = localStorage.getItem('accountConfirmed');
+    if (isConfirmed) {
+      setConfirmed(true);
     }
+  }, []);
 
-    return (
-        <div style={styles.container}>
-            <h2>Confirm Your Account</h2>
-            <p>{message}</p>
-            <a href="/">Go to Login</a>
-        </div>
-    );
+  const handleGoToLogin = () => {
+    navigate('/login'); // Redirige al login
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>Confirm Your Account</h2>
+      <p>Please check your email to confirm your account.</p>
+      {confirmed && (
+        <button
+          onClick={handleGoToLogin}
+          style={styles.button}
+        >
+          Go to Login
+        </button>
+        
+      )}
+    </div>
+  );
 };
 
-// Estilos simples para la pantalla
 const styles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-        textAlign: 'center',
-    },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    textAlign: 'center',
+    width: '100%', 
+  },
+  button: {
+    marginTop: '20px',
+    padding: '12px 0', 
+    fontSize: '18px',
+    backgroundColor: '#007BFF', 
+    color: 'white',
+    border: 'none',
+    borderRadius: '8px', 
+    cursor: 'pointer',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', 
+    transition: 'background-color 0.3s, transform 0.3s', 
+    width: '80%', 
+    maxWidth: '300px',
+  },
 };
 
-export default ConfirmAccount;
+export default Confirm;

@@ -20,7 +20,7 @@ function Register() {
       });
 
       if (response.status === 201) {
-        navigate('/'); 
+        navigate('/confirm'); 
       }
     } catch (error) {
       console.error(error);

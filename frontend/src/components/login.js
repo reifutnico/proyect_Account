@@ -19,11 +19,9 @@ function Login() { // Recibe la función onLogin como prop
             });
 
             if (response.status === 200) {
-
-                console.log(response.data.token);
-                localStorage.setItem('token', JSON.stringify(response.data.token)); // Guarda los datos del usuario
-                localStorage.setItem('user', JSON.stringify(username)); // Guarda los datos del usuario
-                navigate('/home'); // Redirige a la página de inicio
+                localStorage.setItem('token', JSON.stringify(response.data.token));
+                localStorage.setItem('user', JSON.stringify(username));
+                navigate('/home'); 
             }
         } catch (error) {
             setErrorMessage('Error en el inicio de sesión');
@@ -34,7 +32,7 @@ function Login() { // Recibe la función onLogin como prop
     return (
         <div className="login-container">
             <div className="login-box">
-                <h2>Iniciar sesión</h2>
+                <h2>Log In</h2>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <form onSubmit={handleLogin}>
                     <input
@@ -51,10 +49,10 @@ function Login() { // Recibe la función onLogin como prop
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <button type="submit">Iniciar sesión</button>
+                    <button type="submit">Log In</button>
                 </form>
                 <p>
-                    ¿No tienes una cuenta? <Link to="/register">Regístrate</Link>
+                    Don't have an account? <Link to="/register">Sign Up</Link>
                 </p>
             </div>
         </div>

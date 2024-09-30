@@ -33,7 +33,7 @@ router.post("/login", async (request, response) => {
     service: 'Gmail', // Usa el servicio que prefieras
     auth: {
         user: "bot.estudio.rae@gmail.com",
-        pass: "mimaniloco", 
+        pass: "xbly eocf fbey iisr", 
     },
 });
 
@@ -59,7 +59,7 @@ router.get('/confirm/:token', async (req, res) => {
         const email = decoded.email;
         const user = await AccountSrv.getPendingUser(email);
         if (user) {
-            await AccountSrv.confirmUser(user.username, user.email, user.password);
+            await AccountSrv.registerUser(user.username, user.email, user.hashed_password);
             return res.status(200).json({ message: "Your account has been confirmed!" });
         } else {
             return res.status(400).json({ error: "No pending account found." });
@@ -98,7 +98,6 @@ router.get('/confirm/:token', async (req, res) => {
         const salt = await bcrypt.genSalt(10); 
         const hashedPassword = await bcrypt.hash(password, salt); 
         await AccountSrv.registerPendingUser(username, email, hashedPassword);
-
         const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
         const confirmationUrl = `http://localhost:3000/confirm/${token}`;
         await sendEmail(email, 'Confirm your account', `Please confirm your account by clicking this link: ${confirmationUrl}`);
