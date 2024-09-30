@@ -40,6 +40,14 @@ export default class AccountServices {
       return response;
       }
 
+      
+      async getUserByIdTokeb(id)
+      {
+      const response = await AccountRepositories.getUserByIdTokeb(id);
+      return response;
+      }
+
+
 
       async registerUser(username, email, passwordHash)
         {

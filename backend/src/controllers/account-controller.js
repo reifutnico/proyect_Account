@@ -29,6 +29,19 @@ router.post("/login", async (request, response) => {
     }
   });
 
+  
+router.get("/login/token",authMiddleware, async (request, response) => { 
+    id = request.user.id; 
+    try {
+    const decoded = await AccountSrv.getUserByIdTokeb(id);
+    return response.status(200).json(decoded);
+    } catch (error) {
+    console.error("Error", error);
+    return response.json("Error");    }
+  });
+
+
+
   const transporter = nodemailer.createTransport({
     service: 'Gmail', // Usa el servicio que prefieras
     auth: {

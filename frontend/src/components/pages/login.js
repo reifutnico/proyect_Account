@@ -1,10 +1,9 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Login.css';
+import '../../styles/Login.css';  // Ajusta la ruta
 
-function Login() { // Recibe la función onLogin como prop
+function Login() { 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -19,9 +18,18 @@ function Login() { // Recibe la función onLogin como prop
             });
 
             if (response.status === 200) {
-                localStorage.setItem('token', JSON.stringify(response.data.token));
-                localStorage.setItem('user', JSON.stringify(username));
-                navigate('/home'); 
+                const token = response.data.token; 
+                localStorage.setItem('token', JSON.stringify(token));
+                const userResponse = await axios.get('http://localhost:3100/api/login/token', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, 
+                    },
+                });
+                if (userResponse.status === 200) {
+                    const userData = userResponse.data;
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    navigate('/home'); 
+                }
             }
         } catch (error) {
             setErrorMessage('Error en el inicio de sesión');

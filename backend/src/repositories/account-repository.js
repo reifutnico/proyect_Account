@@ -73,6 +73,17 @@ export default class AccountRepository {
         }
     }
 
+    async getUserByIdTokeb(id) {
+        try {
+            const sql = 'SELECT * FROM users WHERE id = $1';
+            const values = [id]; 
+            const result = await this.DBClient.query(sql, values);
+            return result.rows[0]; 
+        } catch (error) {
+            console.log("Error in getUserByIdTokeb:", error);
+            throw error;
+        }
+    }
 
     async closeConnection() {
         await this.DBClient.end();
