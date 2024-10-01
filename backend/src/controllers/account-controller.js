@@ -4,37 +4,44 @@ import nodemailer from 'nodemailer';
 import AccountServices from "../services/account-services.js";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
-
+import decodedToken from "../auth/jwt.js"
 const AccountSrv  = new AccountServices();
-
 
 router.post("/login", async (request, response) => { 
     const user = request.body.username;
     const pass = request.body.password;
+    
     try {
-      const token = await AccountSrv.login(user, pass);
-      if(token!=false){
-      return response.status(200).json({
-        "succes":true,
-        "message":"",
-        "token":token});
-      }else{
-        return response.status(401).json({
-          "succes":false,
-          "message":"Incorrect username or password",
-          "token":""});
-      }
+        const token = await AccountSrv.login(user, pass);
+        if (token !== false) {
+            return response.status(200).json({
+                success: true,
+                message: "Login successful",
+                token: token
+            });
+        } else {
+            return response.status(401).json({
+                success: false,
+                message: "Incorrect username or password",
+                token: ""
+            });
+        }
     } catch (error) {
-      return response.json(error);
+        console.error(error);
+        return response.status(500).json({
+            success: false,
+            message: "An error occurred during login"
+        });
     }
-  });
+});
 
   
-router.get("/login/token",authMiddleware, async (request, response) => { 
-    id = request.user.id; 
+router.get("/login/:token", async (req, response) => { 
+    const { token } = req.params;
+    const decoded = await decodedToken(token)
     try {
-    const decoded = await AccountSrv.getUserByIdTokeb(id);
-    return response.status(200).json(decoded);
+    const user = await AccountSrv.getUserByIdToken(decoded.id);
+    return response.status(200).json(user);
     } catch (error) {
     console.error("Error", error);
     return response.json("Error");    }

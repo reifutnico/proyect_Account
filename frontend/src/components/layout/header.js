@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
-import { Link as ScrollLink } from 'react-scroll'; // Renombrar el Link de react-scroll para evitar confusiones
-import { Link } from 'react-router-dom'; // Asegúrate de importar Link de react-router-dom
-import Modal from './modal'; // Componente Modal para Login
-import '../../styles/header.css';  // Ajusta la ruta
-import Login from '../pages/login'; // Importa el componente Login
+import React, { useState, useEffect } from 'react';
+import { Link as ScrollLink } from 'react-scroll';
+import { Link, useNavigate } from 'react-router-dom';
+import Modal from './modal';
+import '../../styles/header.css';
+import Login from '../pages/login';
 
 const Header = () => {
     const [isLoginOpen, setLoginOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const userDataFromStorage = JSON.parse(localStorage.getItem('userData'));
+
+        if (token && userDataFromStorage) {
+            setIsAuthenticated(true);
+            setUserData(userDataFromStorage);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userData');
+        setIsAuthenticated(false);
+        setUserData(null);
+        navigate('/');
+    };
+
+    // Función para actualizar el estado después del login exitoso
+    const handleLoginSuccess = (userData) => {
+        setIsAuthenticated(true);
+        setUserData(userData);
+        setLoginOpen(false);  // Cierra el modal
+    };
 
     return (
         <header className="header">
@@ -25,23 +53,46 @@ const Header = () => {
                         <button className="nav-button">Contact</button>
                     </ScrollLink>
                 </div>
+                
                 <div className="logo-container">
                     <img src="ruta-al-logo.png" alt="Logo" className="logo" />
                 </div>
+                
                 <div className="auth-buttons">
-                    {/* Botón de Login abre el modal */}
-                    <button className="auth-button" onClick={() => setLoginOpen(true)}>Login</button>
-                    
-                    {/* Botón de Register redirige a la página de registro */}
-                    <Link to="/register">
-                        <button className="auth-button">Register</button>
-                    </Link>
+                    {isAuthenticated ? (
+                        <>
+                            <Link to="/profile">
+                                <button className="auth-button">Profile</button>
+                            </Link>
+
+                            {/* Mostrar contenido específico según el rol */}
+                            {userData?.role_id === 1 ? (
+                                <Link to="/admin">
+                                    <button className="auth-button">Admin Panel</button>
+                                </Link>
+                            ) : (
+                                <Link to="/shop">
+                                    <button className="auth-button">Shop</button>
+                                </Link>
+                            )}
+
+                            {/* Botón de Logout */}
+                            <button className="auth-button" onClick={handleLogout}>Log Out</button>
+                        </>
+                    ) : (
+                        <>
+                            <button className="auth-button" onClick={() => setLoginOpen(true)}>Login</button>
+
+                            <Link to="/register">
+                                <button className="auth-button">Register</button>
+                            </Link>
+                        </>
+                    )}
                 </div>
             </nav>
 
-            {/* Modal de Login */}
             <Modal isOpen={isLoginOpen} onClose={() => setLoginOpen(false)} title="Log In">
-                <Login />
+                <Login onLoginSuccess={handleLoginSuccess} />  {/* Pasar la función de éxito */}
             </Modal>
         </header>
     );

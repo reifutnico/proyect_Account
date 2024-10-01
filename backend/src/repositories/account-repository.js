@@ -24,6 +24,23 @@ export default class AccountRepository {
         return returnEntity;
     }
 
+    
+    async findUserByUsername(user) {
+        let returnEntity = null;
+        try {
+            const sql = "SELECT * FROM users WHERE username = $1";
+            const values = [user];
+            const result = await this.DBClient.query(sql, values);
+            if (result.rows.length > 0) {
+                returnEntity = result.rows[0];
+            }
+        } catch (error) {
+            console.log("Error in getUser:", error);
+            throw error;
+        }
+        return returnEntity;
+    }
+    
     async registerUser(username, email, passwordHash) {
         try {
             await this.deletePendingUser(email);
@@ -73,7 +90,7 @@ export default class AccountRepository {
         }
     }
 
-    async getUserByIdTokeb(id) {
+    async getUserByIdToken(id) {
         try {
             const sql = 'SELECT * FROM users WHERE id = $1';
             const values = [id]; 

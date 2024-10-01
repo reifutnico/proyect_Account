@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/Login.css';  // Ajusta la ruta
 
-function Login() { 
+function Login({ onLoginSuccess }) {  // Recibe onLoginSuccess como prop
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -12,27 +12,32 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3100/api/user/login', {
+            const response = await axios.post('http://localhost:3150/api/account/login', {
                 username,
                 password,
             });
-
+    
             if (response.status === 200) {
                 const token = response.data.token; 
                 localStorage.setItem('token', JSON.stringify(token));
-                const userResponse = await axios.get('http://localhost:3100/api/login/token', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`, 
-                    },
-                });
+    
+                const userResponse = await axios.get(`http://localhost:3150/api/account/login/${token}`);
                 if (userResponse.status === 200) {
                     const userData = userResponse.data;
                     localStorage.setItem('userData', JSON.stringify(userData));
-                    navigate('/home'); 
+
+                    onLoginSuccess(userData);  // Llamar a la función pasada desde el Header para actualizar el estado
+                    navigate('/'); 
                 }
+            } else {
+                setErrorMessage(response.data.message);  // Mostrar el mensaje devuelto por el backend
             }
         } catch (error) {
-            setErrorMessage('Error en el inicio de sesión');
+            if (error.response) {
+                setErrorMessage(error.response.data.message); // Mostrar el mensaje específico del backend
+            } else {
+                setErrorMessage('Error en el inicio de sesión');
+            }
             console.error(error);
         }
     };
