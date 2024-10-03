@@ -1,0 +1,43 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fff;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+}
+
+.profile-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333; /* Color del título */
+}
+
+.profile-card {
+    background-color: #fff; /* Fondo blanco para la tarjeta */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 20px;
+    width: 300px; /* Ancho de la tarjeta */
+    text-align: center; /* Centra el texto */
+}
+
+.profile-username {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4A4A4A; /* Color del nombre de usuario */
+}
+
+.profile-email {
+    font-size: 16px;
+    color: #777; /* Color del correo electrónico */
+    margin-top: 10px; /* Espacio encima del correo electrónico */
+}
+
+.profile-created-at, 
+.profile-updated-at, 
+.profile-role {
+    font-size: 14px;
+    color: #888; /* Color más suave para las fechas y rol */
+    margin-top: 5px; /* Espacio entre cada línea */
+}

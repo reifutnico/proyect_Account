@@ -5,6 +5,19 @@ const contact = () => {
         <div>
             <h1>Contacto</h1>
             <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+            <p>Este es el contenido de contacto.</p>
+
         </div>
     );
 };

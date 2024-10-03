@@ -9,6 +9,8 @@ import ConfirmToken from './components/pages/confirmToken';
 import Home from './components/pages/home'; 
 import About from './components/pages/about'; 
 import Contact from './components/pages/contact'; 
+import Profile from './components/pages/profile'; 
+
 import { useEffect, useState } from 'react'; 
 
 function App() {
@@ -27,13 +29,14 @@ function App() {
     </Router>
   );
 }
-
 function AppContent({ role }) {
   const location = useLocation();
 
+  const hideHeaderFooter = location.pathname === '/register' || location.pathname === '/login';
+
   return (
     <div className="app-container">
-      {location.pathname !== '/register' && <Header role={role} />}
+      {!hideHeaderFooter && <Header role={role} />}
       <main className="main">
         <Routes>
           <Route path="/login" element={<Login />} /> 
@@ -43,9 +46,11 @@ function AppContent({ role }) {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/profile" element={<Profile />} />
+
         </Routes>
       </main>
-      {location.pathname !== '/register' && <Footer />}
+      {!hideHeaderFooter && <Footer />}
     </div>
   );
 }

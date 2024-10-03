@@ -1,5 +1,8 @@
 import React from 'react';
 import '../../styles/home.css';
+import Contact from '../pages/contact'; 
+import About from '../pages/about'; 
+
 const Home = () => {
     return (
         <div>
@@ -8,12 +11,10 @@ const Home = () => {
                 <p>Este es el contenido de la página de inicio.</p>
             </section>
             <section id="about">
-                <h1>Sobre Nosotros</h1>
-                <p>Este es el contenido sobre nosotros.</p>
+            <About/>
             </section>
             <section id="contact">
-                <h1>Contacto</h1>
-                <p>Este es el contenido de contacto.</p>
+            <Contact/>
             </section>
         </div>
     );

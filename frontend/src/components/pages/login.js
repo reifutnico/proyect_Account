@@ -26,15 +26,15 @@ function Login({ onLoginSuccess }) {  // Recibe onLoginSuccess como prop
                     const userData = userResponse.data;
                     localStorage.setItem('userData', JSON.stringify(userData));
 
-                    onLoginSuccess(userData);  // Llamar a la función pasada desde el Header para actualizar el estado
+                    onLoginSuccess(userData);  
                     navigate('/'); 
                 }
             } else {
-                setErrorMessage(response.data.message);  // Mostrar el mensaje devuelto por el backend
+                setErrorMessage(response.data.message); 
             }
         } catch (error) {
             if (error.response) {
-                setErrorMessage(error.response.data.message); // Mostrar el mensaje específico del backend
+                setErrorMessage(error.response.data.message);
             } else {
                 setErrorMessage('Error en el inicio de sesión');
             }
@@ -66,6 +66,7 @@ function Login({ onLoginSuccess }) {  // Recibe onLoginSuccess como prop
                 </form>
                 <p>
                     Don't have an account? <Link to="/register">Sign Up</Link>
+
                 </p>
             </div>
         </div>

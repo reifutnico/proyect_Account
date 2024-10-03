@@ -2,20 +2,27 @@
     width: 100%;
     background-color: #f9f9f9; /* Color de fondo */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    
 }
 
 .nav {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: center; /* Alinea verticalmente todos los elementos */
+    justify-content: space-between; /* Mantiene la separación original entre los elementos */
     height: 80px; /* Altura del header */
     padding: 0 20px;
+}
+
+.logo-container {
+    height: 40px; /* Altura del logo */
+    display: flex;
+    align-items: center; /* Centra verticalmente el logo */
 }
 
 .nav-links {
     display: flex;
     gap: 30px; /* Espaciado entre los botones de navegación */
+    flex-grow: 1; /* Permite que los enlaces de navegación ocupen el espacio restante */
+    justify-content: flex-start; /* Alinea los enlaces de navegación a la izquierda */
 }
 
 .nav-button {
@@ -33,13 +40,6 @@
     color: #007bff; /* Color al pasar el mouse */
 }
 
-.logo-container {
-    height: 40px; /* Altura del logo */
-    flex-grow: 1; /* Permite que el logo se mantenga en el centro */
-    display: flex;
-    justify-content: center; /* Centra el logo */
-}
-
 .logo {
     height: 100%; /* Ajusta la altura al contenedor */
 }
@@ -47,6 +47,15 @@
 .auth-buttons {
     display: flex;
     gap: 10px; /* Espaciado entre los botones de autenticación */
+    align-items: center; /* Alinea verticalmente los botones de autenticación */
+}
+
+.profile-image {
+    width: 40px; /* Ancho del icono de perfil */
+    height: 40px; /* Alto del icono de perfil */
+    border-radius: 50%; /* Hace que la imagen sea redonda */
+    margin-right: 10px; /* Espaciado a la derecha del icono */
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
 }
 
 .auth-button {
